@@ -1,17 +1,12 @@
-/* styles.css */
-
-body {
-    background-color: #f2f2f2;
-    font-family: Arial, sans-serif;
+/* External Styles */
+.title {
+    color: green;
 }
 
-h1 {
-    color: #333333;
-    text-align: center;
+.description {
+    color: gray;
 }
 
-p {
-    color: #666666;
-    font-size: 18px;
-    text-align: justify;
+#specificity-example{
+    color: red;
 }

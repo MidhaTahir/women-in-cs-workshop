@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My First Web Page</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>CSS Specificity Example</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <style>
+    /* Internal Styles */
+    h2 {
+      color: red; /* Overrides external styles */
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to My Web Page</h1>
-    <p>This is a paragraph of text.</p>
-    
-    <script src="script.js"></script>
+  <h1 class="title">Hello, CSS!</h1>
+
+  <p class="description">This is a paragraph with a class.</p>
+  <p style="color: blue;" class="description" id="specificity-example">This is an inline style paragraph.</p>
 </body>
 </html>
