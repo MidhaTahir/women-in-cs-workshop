@@ -1,62 +1,75 @@
+let UIamount = document.getElementById("amount");
+let UIinterest = document.getElementById("interest");
+let UIyears = document.getElementById("years");
+let UImonthlyPayment = document.getElementById("monthly-payment");
+let UItotalPayment = document.getElementById("total-payment");
+let UItotalInterest = document.getElementById("total-interest");
 
-// 1. Variables:
-let name = 'John';
-const dob = 1999;
-var isAdmin = true;
-
-
-// 2. Data Types:
-let count = 10;
-let message = 'Hello';
-let isLogged = true;
-let fruits = ['apple', 'banana', 'orange'];
-let person = { name: 'John', age: 25 };
-
-
-// 3. Operators:
-let x = 10;
-let y = 5;
-let sum = x + y;
-let isGreater = x > y;
-let fullName = 'John' + ' Doe';
-
-
-// 4. Conditional Statements:
-let age = 18;
-
-if (age >= 18) {
-  console.log('You are an adult.');
-} else {
-  console.log('You are a minor.');
-}
-
-
-// 5. Loops:
-
-for (let i = 0; i < 5; i++) {
-  console.log(i);
-}
-
-let i = 0;
-while (i < 5) {
-  console.log(i);
-  i++;
-}
-
-
-// 6. Functions:
-function greet(name) {
-  console.log('Hello, ' + name + '!');
-}
-
-greet('John');
-
-
-// 7. Event Handling:
-document.querySelector('button').addEventListener('click', function() {
-  console.log('Button clicked!');
+document.getElementById("loan-form").addEventListener("submit", function (e) {
+  //Hide results
+  document.getElementById("results").style.display = "none";
+  //Show loader
+  document.getElementById("loading").style.display = "block";
+  //call calculateResults after 2 sec
+  setTimeout(calculateResults, 2000);
+  e.preventDefault();
 });
 
+function calculateResults(e) {
+  let principal = parseFloat(UIamount.value);
+  let calculatedInterest = parseFloat(UIinterest.value) / 100 / 12;
+  let calculatedPayments = parseFloat(UIyears.value) * 12;
+  //Compute Monthly Payment
+  let x = Math.pow(1 + calculatedInterest, calculatedPayments);
+  let monthly = (principal * x * calculatedInterest) / (x - 1);
 
-// 8. DOM Manipulation:
-document.getElementById('myElement').textContent = 'Updated text';
+  //to check monthly is finite number
+  if (isFinite(monthly)) {
+    UImonthlyPayment.value = monthly.toFixed(2);
+    UItotalPayment.value = (monthly * calculatedPayments).toFixed(2);
+    UItotalInterest.value = (monthly * calculatedPayments - principal).toFixed(
+      2
+    );
+    //Show results
+    document.getElementById("results").style.display = "block";
+    //Hide loader
+    document.getElementById("loading").style.display = "none";
+  } else {
+    showError("Please check your numbers");
+  }
+}
+
+function showError(msg) {
+  document.getElementById("results").style.display = "none";
+  document.getElementById("loading").style.display = "none";
+
+  const errorDiv = document.createElement("div");
+  const card = document.querySelector(".card");
+  const heading = document.querySelector(".heading");
+  errorDiv.className = "alert alert-danger";
+  //Create text node and append to div
+  errorDiv.appendChild(document.createTextNode(msg));
+  //insert error above heading
+  card.insertBefore(errorDiv, heading);
+  //Clear error after 4 seconds
+  setTimeout(clearError, 4000);
+}
+
+function clearError() {
+  document.querySelector(".alert").remove();
+}
+
+document.getElementById("clear").addEventListener("click", clear);
+
+function clear(e) {
+  setTimeout(function () {
+    UIamount.value = "";
+    UIyears.value = "";
+    UIinterest.value = "";
+    UImonthlyPayment.value = "";
+    UItotalPayment.value = "";
+    UItotalInterest.value = "";
+    document.getElementById("results").style.display = "none";
+  }, 500);
+  e.preventDefault();
+}
