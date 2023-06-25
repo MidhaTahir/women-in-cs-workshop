@@ -20,6 +20,7 @@ function calculateResults(e) {
   let calculatedInterest = parseFloat(UIinterest.value) / 100 / 12;
   let calculatedPayments = parseFloat(UIyears.value) * 12;
   //Compute Monthly Payment
+  //Math.pow(base, exponent)
   let x = Math.pow(1 + calculatedInterest, calculatedPayments);
   let monthly = (principal * x * calculatedInterest) / (x - 1);
 
@@ -71,5 +72,6 @@ function clear(e) {
     UItotalInterest.value = "";
     document.getElementById("results").style.display = "none";
   }, 500);
+  // 0.5 sec or 500 ms
   e.preventDefault();
 }
